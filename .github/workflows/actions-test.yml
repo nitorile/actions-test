@@ -1,0 +1,44 @@
+name: test
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout my repository
+        uses: actions/checkout@v4
+      - name: Set up node v22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Clean-install dependency
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+      - name: Restore playwright binaries
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-chromium--${{ steps.playwright-version.outputs.PLAYWRIGHT_VERSION }}
+      - name: Install Playwright includes dependencies
+        run: npx playwright install chromium --with-deps --no-shell
+      - name: Run Code
+        run: node run-print-page.js
+        env:
+          CGSS_KEY: ${{ secrets.CGSS_KEY }}
+      - name: Archive outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-print-page
+          path: data/test.png

@@ -1,0 +1,11 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "mishiro-core": "^6.3.7"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "got": "^14.4.7",
+    "playwright": "^1.52.0"
+  }
+}

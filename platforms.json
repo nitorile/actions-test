@@ -1,0 +1,17 @@
+[
+    {
+        "mask": 1,
+        "name": "iOS",
+        "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.3 Mobile/15E148 Safari/605.1.15"
+    },
+    {
+        "mask": 2,
+        "name": "Android",
+        "userAgent": "Mozilla/5.0 (Linux; Android 13; Pixel 6a) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Mobile Safari/537.36"
+    },
+    {
+        "mask": 4,
+        "name": "DMM",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0"
+    }
+]
